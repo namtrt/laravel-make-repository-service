@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
+//use Your Model
+
+/**
+ * Class DummyClass.
+ */
+class DummyClass extends BaseRepository
+{
+    /**
+     * @return string
+     *  Return the model
+     */
+    public function model()
+    {
+        //return YourModel::class;
+    }
+}

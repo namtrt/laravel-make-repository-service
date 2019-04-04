@@ -1,0 +1,32 @@
+{
+    "name": "thanhnamcnv/laravel-make-repository-service",
+    "description": "A simple package to create a make:repository, make:service command for Laravel 5+",
+    "type": "library",
+    "require": {
+        "illuminate/console": "~5.0",
+        "illuminate/database": "~5.0",
+        "illuminate/support": "~5.0",
+        "php": ">=5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nam Tran",
+            "email": "thanhnam2494@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NamTran\\LaravelMakeRepositoryService\\RepositoryServiceProvider"
+            ]
+        }
+    },
+    
+    "autoload": {
+        "psr-4": {
+            "NamTran\\LaravelMakeRepositoryService\\": "src/"
+        }
+    }
+}
