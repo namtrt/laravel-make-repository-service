@@ -10,7 +10,7 @@ Or add the following to your composer.json's require-dev section and `composer u
 
 ```json
 "require-dev": {
-          "jason-guru/laravel-make-repository": "master-dev"
+          "thanhnamcnv/laravel-make-repository-service": "master-dev"
 }
 ```
 ## Usage
