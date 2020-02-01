@@ -1,5 +1,5 @@
-# Laravel 5+ Php Artisan Make:Repository, Php Artisan Make:Service
-A package for addding `php artisan make:repository`, `php artisan make:service` command to Laravel 5+
+# Laravel 6+ Php Artisan Make:Repository, Php Artisan Make:Service
+A package for addding `php artisan make:repository`, `php artisan make:service` command to Laravel 6+
 
 ## Installation
 Require the package with composer using the following command:
@@ -10,9 +10,18 @@ Or add the following to your composer.json's require-dev section and `composer u
 
 ```json
 "require-dev": {
-          "thanhnamcnv/laravel-make-repository-service": "^1.0.0"
+          "thanhnamcnv/laravel-make-repository-service": "^2.*"
 }
 ```
+
+In your config/app.php add NamTran\LaravelMakeRepositoryService\RepositoryServiceProvider::class to the end of the providers array:
+```php
+'providers' => [
+    ...
+    NamTran\LaravelMakeRepositoryService\RepositoryServiceProvider::class,
+],
+```
+
 ## Usage
 `php artisan make:repository your-repository-name`
 
@@ -20,13 +29,13 @@ Or add the following to your composer.json's require-dev section and `composer u
 
 Example:
 ```
-php artisan make:repository UserRepository
+php artisan make:repository User
 
-php artisan make:service UserService
+php artisan make:service User
 ```
 or
 ```
-php artisan make:repository Backend\UserRepository
+php artisan make:repository Backend\User
 
-php artisan make:service Backend\UserService
+php artisan make:service Backend\User
 ```
