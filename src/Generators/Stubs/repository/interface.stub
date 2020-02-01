@@ -1,0 +1,10 @@
+<?php
+
+$NAMESPACE$
+
+use NamTran\LaravelMakeRepositoryService\Repository\RepositoryContract;
+
+interface $CLASS$RepositoryInterface extends RepositoryContract
+{
+    //
+}

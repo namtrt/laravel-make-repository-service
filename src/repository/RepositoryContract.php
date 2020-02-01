@@ -25,7 +25,7 @@ interface RepositoryContract
 
     public function get(array $columns = ['*']);
 
-    public function getById($id, array $columns = ['*']);
+    public function find($id, array $columns = ['*']);
 
     public function getByColumn($item, $column, array $columns = ['*']);
 

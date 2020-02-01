@@ -2,6 +2,7 @@
 
 namespace NamTran\LaravelMakeRepositoryService\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use JasonGuru\LaravelMakeRepository\Exceptions\GeneralException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,14 +15,14 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * The repository model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $model;
 
     /**
      * The query builder.
      *
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var Builder
      */
     protected $query;
 
@@ -130,7 +131,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param array $data
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function create(array $data)
     {
@@ -185,7 +186,7 @@ abstract class BaseRepository implements RepositoryContract
     {
         $this->unsetClauses();
 
-        return $this->getById($id)->delete();
+        return $this->find($id)->delete();
     }
 
     /**
@@ -244,7 +245,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @return Collection|Model
      */
-    public function getById($id, array $columns = ['*'])
+    public function find($id, array $columns = ['*'])
     {
         $this->unsetClauses();
 
@@ -301,7 +302,7 @@ abstract class BaseRepository implements RepositoryContract
     {
         $this->unsetClauses();
 
-        $model = $this->getById($id);
+        $model = $this->find($id);
 
         $model->update($data, $options);
 

@@ -3,6 +3,8 @@
 namespace NamTran\LaravelMakeRepositoryService\Exceptions;
 
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 
 /**
@@ -40,8 +42,8 @@ class GeneralException extends Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @param  Request
+     * @return Response
      */
     public function render($request)
     {

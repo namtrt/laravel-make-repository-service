@@ -1,0 +1,13 @@
+<?php
+
+$NAMESPACE$
+
+use $SERVICE$
+
+class $CLASS$Service implements $CLASS$ServiceInterface
+{
+    public function __construct()
+    {
+        //
+    }
+}

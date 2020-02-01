@@ -1,0 +1,3 @@
+
+        $this->app->bind($CLASS$, $INTERFACE$);
+        $PLACEHOLDER$

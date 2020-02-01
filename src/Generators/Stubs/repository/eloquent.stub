@@ -1,0 +1,19 @@
+<?php
+
+$NAMESPACE$
+
+use NamTran\LaravelMakeRepositoryService\Repository\BaseRepository;
+use $REPOSITORY$
+
+class $CLASS$Repository extends BaseRepository implements $CLASS$RepositoryInterface
+{
+    /**
+     * Specify Model class name
+     *
+     * @return string
+     */
+    public function model()
+    {
+        //return;
+    }
+}
