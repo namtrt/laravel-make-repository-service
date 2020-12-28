@@ -29,8 +29,8 @@ class BindingsServiceGenerator extends Generator
     {
         // Add entity service binding to the service service provider
         $provider = File::get($this->getPath());
-        $serviceInterface = '\\' . $this->getServiceInterface() . "::class";
-        $serviceEloquent = '\\' . $this->getServiceClass() . "::class";
+        $serviceInterface = "\\" . $this->getServiceInterface() . "::class";
+        $serviceEloquent = "\\" . $this->getServiceClass() . "::class";
         return File::put($this->getPath(), str_replace($this->bindPlaceholder, "\$this->app->bind({$serviceInterface}, $serviceEloquent);" . PHP_EOL . '        ' . $this->bindPlaceholder, $provider));
     }
 
@@ -51,7 +51,7 @@ class BindingsServiceGenerator extends Generator
      */
     public function getBasePath(): string
     {
-        return Config::get('repository.generator.basePath', App::basePath());
+        return Config::get('repository.generator.basePath', App::path());
     }
 
     /**
@@ -94,7 +94,7 @@ class BindingsServiceGenerator extends Generator
             'name' => $this->name,
         ]);
 
-        $service = $serviceGenerator->getRootNamespace() . '\\' . $serviceGenerator->getName();
+        $service = $serviceGenerator->getRootNamespace() . "\\" . $serviceGenerator->getName();
 
         return str_replace([
                 "\\",
