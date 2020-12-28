@@ -51,7 +51,7 @@ class BindingsServiceGenerator extends Generator
      */
     public function getBasePath(): string
     {
-        return Config::get('service.generator.basePath', App::path());
+        return Config::get('repository.generator.basePath', App::path());
     }
 
     /**
