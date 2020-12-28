@@ -301,9 +301,9 @@ abstract class Generator
      * @param string $key
      * @param string|null $default
      *
-     * @return string
+     * @return mixed
      */
-    public function getOption(string $key, $default = null): string
+    public function getOption(string $key, $default = null)
     {
         if (!$this->hasOption($key)) {
             return $default;
@@ -319,9 +319,9 @@ abstract class Generator
      * @param string $key
      * @param string|null $default
      *
-     * @return string
+     * @return mixed
      */
-    public function option(string $key, $default = null): string
+    public function option(string $key, $default = null)
     {
         return $this->getOption($key, $default);
     }
