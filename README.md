@@ -22,6 +22,11 @@ In your config/app.php add NamTran\LaravelMakeRepositoryService\RepositoryServic
 ],
 ```
 
+Publish Configuration
+```bash
+php artisan vendor:publish --provider "NamTran\LaravelMakeRepositoryService\RepositoryServiceProvider"
+```
+
 ## Usage
 `php artisan make:repository your-repository-name`
 
