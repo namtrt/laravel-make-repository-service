@@ -1,6 +1,10 @@
 <?php
 namespace NamTran\LaravelMakeRepositoryService\Generators;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
+
 /**
  * Class BindingsServiceGenerator
  * @package NamTran\LaravelMakeRepositoryService\Generators
@@ -21,13 +25,13 @@ class BindingsServiceGenerator extends Generator
      */
     protected $stub = 'bindings/bindings';
 
-    public function run()
+    public function run(): int
     {
         // Add entity service binding to the service service provider
-        $provider = \File::get($this->getPath());
+        $provider = File::get($this->getPath());
         $serviceInterface = '\\' . $this->getServiceInterface() . "::class";
         $serviceEloquent = '\\' . $this->getServiceClass() . "::class";
-        \File::put($this->getPath(), str_replace($this->bindPlaceholder, "\$this->app->bind({$serviceInterface}, $serviceEloquent);" . PHP_EOL . '        ' . $this->bindPlaceholder, $provider));
+        return File::put($this->getPath(), str_replace($this->bindPlaceholder, "\$this->app->bind({$serviceInterface}, $serviceEloquent);" . PHP_EOL . '        ' . $this->bindPlaceholder, $provider));
     }
 
     /**
@@ -35,9 +39,9 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
-        return $this->getBasePath() . '/Providers/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '.php';
+        return $this->getBasePath() . '/Providers/' . $this->getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '.php';
     }
 
     /**
@@ -45,9 +49,9 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
-        return config('repository.generator.basePath', app()->path());
+        return Config::get('repository.generator.basePath', App::basePath());
     }
 
     /**
@@ -55,7 +59,7 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getPathConfigNode()
+    public function getPathConfigNode(): string
     {
         return 'service_provider';
     }
@@ -65,7 +69,7 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getServiceInterface()
+    public function getServiceInterface(): string
     {
         $serviceGenerator = new ServiceInterfaceGenerator([
             'name' => $this->name,
@@ -84,7 +88,7 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getServiceClass()
+    public function getServiceClass(): string
     {
         $serviceGenerator = new ServiceEloquentGenerator([
             'name' => $this->name,
@@ -103,9 +107,9 @@ class BindingsServiceGenerator extends Generator
      *
      * @return string
      */
-    public function getRootNamespace()
+    public function getRootNamespace(): string
     {
-        return parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode());
+        return parent::getRootNamespace() . $this->getConfigGeneratorClassPath($this->getPathConfigNode());
     }
 
     /**
@@ -113,9 +117,8 @@ class BindingsServiceGenerator extends Generator
      *
      * @return array
      */
-    public function getReplacements()
+    public function getReplacements(): array
     {
-
         return array_merge(parent::getReplacements(), [
             'interface' => $this->getServiceInterface(),
             'class' => $this->getServiceClass(),

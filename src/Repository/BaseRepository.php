@@ -3,9 +3,9 @@
 namespace NamTran\LaravelMakeRepositoryService\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
-use JasonGuru\LaravelMakeRepository\Exceptions\GeneralException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use NamTran\LaravelMakeRepositoryService\Exceptions\GeneralException;
 
 /**
  * Class BaseRepository.
@@ -145,7 +145,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param array $data
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function createMultiple(array $data)
     {

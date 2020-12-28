@@ -13,7 +13,7 @@ class Stub
      *
      * @var null|string
      */
-    protected static $basePath = null;
+    protected static $basePath;
     /**
      * The stub path.
      *
@@ -25,15 +25,15 @@ class Stub
      *
      * @var array
      */
-    protected $replaces = [];
+    protected $replaces;
 
     /**
-     * The contructor.
+     * The constructor.
      *
-     * @param string $path
-     * @param array  $replaces
+     * @param string|null $path
+     * @param array $replaces
      */
-    public function __construct($path, array $replaces = [])
+    public function __construct(string $path = null, array $replaces = [])
     {
         $this->path = $path;
         $this->replaces = $replaces;
@@ -42,12 +42,12 @@ class Stub
     /**
      * Create new self instance.
      *
-     * @param  string $path
-     * @param  array  $replaces
+     * @param string $path
+     * @param array $replaces
      *
      * @return self
      */
-    public static function create($path, array $replaces = [])
+    public static function create(string $path, array $replaces = []): self
     {
         return new static($path, $replaces);
     }
@@ -55,11 +55,11 @@ class Stub
     /**
      * Set base path.
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public static function setBasePath($path)
+    public static function setBasePath(string $path): void
     {
         static::$basePath = $path;
     }
@@ -71,7 +71,7 @@ class Stub
      *
      * @return $this
      */
-    public function replace(array $replaces = [])
+    public function replace(array $replaces = []): self
     {
         $this->replaces = $replaces;
 
@@ -83,7 +83,7 @@ class Stub
      *
      * @return array
      */
-    public function getReplaces()
+    public function getReplaces(): array
     {
         return $this->replaces;
     }
@@ -93,7 +93,7 @@ class Stub
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }
@@ -103,7 +103,7 @@ class Stub
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->getContents();
     }
@@ -128,7 +128,7 @@ class Stub
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return static::$basePath . $this->path;
     }
@@ -140,7 +140,7 @@ class Stub
      *
      * @return self
      */
-    public function setPath($path)
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
