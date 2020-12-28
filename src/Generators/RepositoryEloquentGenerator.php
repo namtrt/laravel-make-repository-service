@@ -35,7 +35,7 @@ class RepositoryEloquentGenerator extends Generator
      */
     public function getPathConfigNode(): string
     {
-        return 'Repositories';
+        return 'repositories';
     }
 
     /**
