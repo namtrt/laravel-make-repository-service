@@ -9,7 +9,7 @@ use NamTran\LaravelMakeRepositoryService\Generators\RepositoryEloquentGenerator;
 use NamTran\LaravelMakeRepositoryService\Generators\RepositoryInterfaceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use File;
+use Illuminate\Support\Facades\File;
 
 class RepositoryCommand extends Command
 {
@@ -74,7 +74,7 @@ class RepositoryCommand extends Command
                 'force' => $this->option('force'),
             ]);
             // generate repository service provider
-            if (!file_exists($bindingGenerator->getPath())) {
+            if (! file_exists($bindingGenerator->getPath())) {
                 $this->call('make:provider', [
                     'name' => $bindingGenerator->getConfigGeneratorClassPath($bindingGenerator->getPathConfigNode()),
                 ]);

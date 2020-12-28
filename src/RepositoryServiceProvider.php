@@ -2,6 +2,8 @@
 
 namespace NamTran\LaravelMakeRepositoryService;
 
+Use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use NamTran\LaravelMakeRepositoryService\Generators\Commands\RepositoryCommand;
 use NamTran\LaravelMakeRepositoryService\Generators\Commands\ServiceCommand;
@@ -13,16 +15,16 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->commands(RepositoryCommand::class);
         $this->commands(ServiceCommand::class);
-        if (class_exists('\\App\\Providers\\' . config('repository.generator.paths.repository_provider', 'RepositoryServiceProvider'))) {
-            $this->app->register('\\App\\Providers\\' . config('repository.generator.paths.repository_provider', 'RepositoryServiceProvider'));
+        if (class_exists("\\App\\Providers\\" . Config::get('repository.generator.paths.repository_provider', 'RepositoryServiceProvider'))) {
+            $this->app->register("\\App\\Providers\\" . Config::get('repository.generator.paths.repository_provider', 'RepositoryServiceProvider'));
         }
 
-        if (class_exists('\\App\\Providers\\' . config('repository.generator.paths.service_provider', 'BootstrapServiceProvider'))) {
-            $this->app->register('\\App\\Providers\\' . config('repository.generator.paths.service_provider', 'BootstrapServiceProvider'));
+        if (class_exists("\\App\\Providers\\" . Config::get('repository.generator.paths.service_provider', 'BootstrapServiceProvider'))) {
+            $this->app->register("\\App\\Providers\\" . Config::get('repository.generator.paths.service_provider', 'BootstrapServiceProvider'));
         }
     }
 
@@ -30,10 +32,10 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/config/repository.php' => config_path('repository.php')
+            __DIR__ . '/config/repository.php' => App::configPath('repository.php')
         ]);
 
         $this->mergeConfigFrom(__DIR__ . '/config/repository.php', 'repository');
@@ -44,7 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [];
     }

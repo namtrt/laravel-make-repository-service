@@ -1,6 +1,6 @@
 {
     "name": "thanhnamcnv/laravel-make-repository-service",
-    "description": "A simple package to create a make:repository, make:service command for Laravel 5+",
+    "description": "A simple package to create a make:repository, make:service command for Laravel 8+",
     "type": "library",
     "require": {
         "illuminate/http": "~5.0|~6.0|~7.0|~8.0",

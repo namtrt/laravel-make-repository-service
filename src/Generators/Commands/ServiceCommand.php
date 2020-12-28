@@ -9,7 +9,7 @@ use NamTran\LaravelMakeRepositoryService\Generators\ServiceEloquentGenerator;
 use NamTran\LaravelMakeRepositoryService\Generators\ServiceInterfaceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use File;
+use Illuminate\Support\Facades\File;
 
 class ServiceCommand extends Command
 {

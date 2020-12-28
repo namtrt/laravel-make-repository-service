@@ -2,6 +2,9 @@
 
 namespace NamTran\LaravelMakeRepositoryService\Generators;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+
 /**
  * Class ServiceEloquentGenerator
  * @package NamTran\LaravelMakeRepositoryService\Generators
@@ -21,9 +24,9 @@ class ServiceEloquentGenerator extends Generator
      *
      * @return string
      */
-    public function getRootNamespace()
+    public function getRootNamespace(): string
     {
-        return parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode());
+        return parent::getRootNamespace() . $this->getConfigGeneratorClassPath($this->getPathConfigNode());
     }
 
     /**
@@ -31,7 +34,7 @@ class ServiceEloquentGenerator extends Generator
      *
      * @return string
      */
-    public function getPathConfigNode()
+    public function getPathConfigNode(): string
     {
         return 'services';
     }
@@ -41,9 +44,9 @@ class ServiceEloquentGenerator extends Generator
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Service.php';
+        return $this->getBasePath() . '/' . $this->getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Service.php';
     }
 
     /**
@@ -51,9 +54,9 @@ class ServiceEloquentGenerator extends Generator
      *
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
-        return config('repository.generator.basePath', app()->path());
+        return Config::get('repository.generator.basePath', App::basePath());
     }
 
     /**
@@ -61,9 +64,9 @@ class ServiceEloquentGenerator extends Generator
      *
      * @return array
      */
-    public function getReplacements()
+    public function getReplacements(): array
     {
-        $service = parent::getRootNamespace() . parent::getConfigGeneratorClassPath('service_interfaces') . '\\' . $this->name . 'ServiceInterface;';
+        $service = parent::getRootNamespace() . $this->getConfigGeneratorClassPath('service_interfaces') . '\\' . $this->name . 'ServiceInterface;';
         $service = str_replace([
             "\\",
             '/'

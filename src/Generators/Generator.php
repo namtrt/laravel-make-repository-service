@@ -2,7 +2,10 @@
 
 namespace NamTran\LaravelMakeRepositoryService\Generators;
 
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use NamTran\LaravelMakeRepositoryService\Exceptions\FileAlreadyExistsException;
 
@@ -41,18 +44,6 @@ abstract class Generator
         $this->options = $options;
     }
 
-
-    /**
-     * Get the filesystem instance.
-     *
-     * @return Filesystem
-     */
-    public function getFilesystem()
-    {
-        return $this->filesystem;
-    }
-
-
     /**
      * Set the filesystem instance.
      *
@@ -60,7 +51,7 @@ abstract class Generator
      *
      * @return $this
      */
-    public function setFilesystem(Filesystem $filesystem)
+    public function setFilesystem(Filesystem $filesystem): self
     {
         $this->filesystem = $filesystem;
 
@@ -73,9 +64,9 @@ abstract class Generator
      *
      * @return string
      */
-    public function getStub()
+    public function getStub(): string
     {
-        $path = config('repository.generator.stubsOverridePath', __DIR__);
+        $path = Config::get('repository.generator.stubsOverridePath', __DIR__);
 
         if(!file_exists($path . '/Stubs/' . $this->stub . '.stub')){
             $path = __DIR__;
@@ -90,7 +81,7 @@ abstract class Generator
      *
      * @return array
      */
-    public function getReplacements()
+    public function getReplacements(): array
     {
         return [
             'class'          => $this->getClass(),
@@ -105,9 +96,9 @@ abstract class Generator
      *
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
-        return base_path();
+        return App::basePath();
     }
 
 
@@ -116,7 +107,7 @@ abstract class Generator
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->getBasePath() . '/' . $this->getName() . '.php';
     }
@@ -127,7 +118,7 @@ abstract class Generator
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         $name = $this->name;
         if (Str::contains($this->name, '\\')) {
@@ -146,9 +137,9 @@ abstract class Generator
      *
      * @return string
      */
-    public function getAppNamespace()
+    public function getAppNamespace(): string
     {
-        return \Illuminate\Container\Container::getInstance()->getNamespace();
+        return Container::getInstance()->getNamespace();
     }
 
 
@@ -157,7 +148,7 @@ abstract class Generator
      *
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return Str::studly(class_basename($this->getName()));
     }
@@ -168,7 +159,7 @@ abstract class Generator
      *
      * @return array
      */
-    public function getSegments()
+    public function getSegments(): array
     {
         return explode('/', $this->getName());
     }
@@ -179,9 +170,9 @@ abstract class Generator
      *
      * @return string
      */
-    public function getRootNamespace()
+    public function getRootNamespace(): string
     {
-        return config('repository.generator.rootNamespace', $this->getAppNamespace());
+        return Config::get('repository.generator.rootNamespace', $this->getAppNamespace());
     }
 
 
@@ -190,28 +181,29 @@ abstract class Generator
      *
      * @param $class
      *
+     * @param bool $directoryPath
      * @return string
      */
-    public function getConfigGeneratorClassPath($class, $directoryPath = false)
+    public function getConfigGeneratorClassPath($class, $directoryPath = false): string
     {
         switch ($class) {
             case ('repositories' === $class):
-                $path = config('repository.generator.paths.repositories', 'Repositories');
+                $path = Config::get('repository.generator.paths.repositories', 'Repositories');
                 break;
             case ('repository_interfaces' === $class):
-                $path = config('repository.generator.paths.repository_interfaces', 'Repositories');
+                $path = Config::get('repository.generator.paths.repository_interfaces', 'Repositories');
                 break;
             case ('services' === $class):
-                $path = config('repository.generator.paths.services', 'Services');
+                $path = Config::get('repository.generator.paths.services', 'Services');
                 break;
             case ('service_interfaces' === $class):
-                $path = config('repository.generator.paths.service_interfaces', 'Services');
+                $path = Config::get('repository.generator.paths.service_interfaces', 'Services');
                 break;
             case ('repository_provider' === $class):
-                $path = config('repository.generator.paths.repository_provider', 'RepositoryServiceProvider');
+                $path = Config::get('repository.generator.paths.repository_provider', 'RepositoryServiceProvider');
                 break;
             case ('service_provider' === $class):
-                $path = config('repository.generator.paths.service_provider', 'BootstrapServiceProvider');
+                $path = Config::get('repository.generator.paths.service_provider', 'BootstrapServiceProvider');
                 break;
             default:
                 $path = '';
@@ -234,18 +226,18 @@ abstract class Generator
     /**
      * Get class namespace.
      *
-     * @return string
+     * @return string|null
      */
-    public function getNamespace()
+    public function getNamespace(): ?string
     {
         $segments = $this->getSegments();
         array_pop($segments);
         $rootNamespace = $this->getRootNamespace();
-        if ($rootNamespace == false) {
+        if ($rootNamespace === false) {
             return null;
         }
 
-        return 'namespace ' . rtrim($rootNamespace . '\\' . implode($segments, '\\'), '\\') . ';';
+        return 'namespace ' . rtrim($rootNamespace . '\\' . implode('\\', $segments), '\\') . ';';
     }
 
 
@@ -254,7 +246,7 @@ abstract class Generator
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         //
     }
@@ -266,7 +258,7 @@ abstract class Generator
      * @return int
      * @throws FileAlreadyExistsException
      */
-    public function run()
+    public function run(): int
     {
         $this->setUp();
         if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
@@ -283,9 +275,9 @@ abstract class Generator
     /**
      * Get options.
      *
-     * @return string
+     * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -294,11 +286,10 @@ abstract class Generator
     /**
      * Determinte whether the given key exist in options array.
      *
-     * @param  string $key
-     *
-     * @return boolean
+     * @param string $key
+     * @return bool
      */
-    public function hasOption($key)
+    public function hasOption(string $key): bool
     {
         return array_key_exists($key, $this->options);
     }
@@ -307,12 +298,12 @@ abstract class Generator
     /**
      * Get value from options by given key.
      *
-     * @param  string      $key
-     * @param  string|null $default
+     * @param string $key
+     * @param string|null $default
      *
      * @return string
      */
-    public function getOption($key, $default = null)
+    public function getOption(string $key, $default = null): string
     {
         if (!$this->hasOption($key)) {
             return $default;
@@ -325,12 +316,12 @@ abstract class Generator
     /**
      * Helper method for "getOption".
      *
-     * @param  string      $key
-     * @param  string|null $default
+     * @param string $key
+     * @param string|null $default
      *
      * @return string
      */
-    public function option($key, $default = null)
+    public function option(string $key, $default = null): string
     {
         return $this->getOption($key, $default);
     }
@@ -339,11 +330,11 @@ abstract class Generator
     /**
      * Handle call to __get method.
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return string|mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         if (property_exists($this, $key)) {
             return $this->{$key};
