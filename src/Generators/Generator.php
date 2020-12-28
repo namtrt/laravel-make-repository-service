@@ -98,7 +98,7 @@ abstract class Generator
      */
     public function getBasePath(): string
     {
-        return App::basePath();
+        return App::path();
     }
 
 

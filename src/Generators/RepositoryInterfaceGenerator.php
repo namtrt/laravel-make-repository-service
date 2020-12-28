@@ -56,7 +56,7 @@ class RepositoryInterfaceGenerator extends Generator
      */
     public function getBasePath(): string
     {
-        return Config::get('repository.generator.basePath', App::basePath());
+        return Config::get('repository.generator.basePath', App::path());
     }
 
     /**
