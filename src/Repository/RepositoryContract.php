@@ -35,7 +35,7 @@ interface RepositoryContract
 
     public function limit($limit);
 
-    public function orderBy($column, $direction = 'asc')
+    public function orderBy($column, $direction = 'asc');
 
     public function where($column, $value, $operator = '=');
 
