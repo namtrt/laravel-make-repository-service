@@ -10,7 +10,7 @@ Or add the following to your composer.json's require-dev section and `composer u
 
 ```json
 "require-dev": {
-          "thanhnamcnv/laravel-make-repository-service": "^2.*"
+          "thanhnamcnv/laravel-make-repository-service": "^3.*"
 }
 ```
 
